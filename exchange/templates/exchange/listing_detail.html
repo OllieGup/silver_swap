@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}My Listings{% endblock %}
+
+{% block content %}
+<h1>My Listings</h1>
+
+{% if listings %}
+    <ul>
+        {% for listing in listings %}
+            <li>
+                <strong>{{ listing.title }}</strong><br>
+                {{ listing.description|truncatewords:20 }}<br>
+                <a href="{% url 'listing_detail' listing.id %}">View</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You haven't listed anything yet.</p>
+{% endif %}
+
+{% endblock %}
+

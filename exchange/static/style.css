@@ -1,0 +1,218 @@
+/* ============================================================
+   SILVERSWAP — INDUSTRIAL SILVER EXCHANGE THEME
+   A modern, metallic, vault-inspired UI aesthetic
+   ============================================================ */
+
+/* --- Colour System --- */
+:root {
+    --bg-dark: #111214;
+    --bg-panel: rgba(255, 255, 255, 0.03);
+    --bg-panel-strong: rgba(255, 255, 255, 0.06);
+
+    --silver: #d9d9d9;
+    --silver-soft: #bfc3c7;
+    --silver-glow: #e8eef2;
+
+    --accent: #9ec7ff; /* cold steel-blue highlight */
+    --accent-strong: #c7e2ff;
+
+    --border-light: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.15);
+
+    --shadow: rgba(0, 0, 0, 0.45);
+}
+
+/* ============================================================
+   GLOBAL
+   ============================================================ */
+
+body {
+    background: var(--bg-dark);
+
+    /* Subtle brushed-metal texture */
+    background-image:
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 4px 4px;
+
+    color: var(--silver);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Typography scale */
+h1, h2, h3 {
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: 0;
+}
+
+p {
+    color: var(--silver-soft);
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+
+nav {
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid var(--border-light);
+    padding: 1rem 2rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    color: var(--silver);
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+nav a:hover {
+    color: var(--accent);
+}
+
+/* ============================================================
+   PANELS / CARDS — Industrial Glass Panels
+   ============================================================ */
+
+.card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+
+    backdrop-filter: blur(10px);
+
+    /* Steel-like depth */
+    box-shadow:
+        inset 0 0 0.5px rgba(255,255,255,0.25),
+        0 4px 20px var(--shadow);
+}
+
+/* Optional: stronger panel for emphasis */
+.card-strong {
+    background: var(--bg-panel-strong);
+    border: 1px solid var(--border-strong);
+}
+
+/* ============================================================
+   BUTTONS — Machined Steel Controls
+   ============================================================ */
+
+button, .btn {
+    background: linear-gradient(145deg, #1a1b1d, #0f0f10);
+    border: 1px solid var(--border-light);
+    color: var(--silver);
+    border-radius: 6px;
+    padding: 0.7rem 1.2rem;
+    cursor: pointer;
+    transition: 0.25s ease;
+    font-weight: 500;
+}
+
+button:hover, .btn:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 12px rgba(158,199,255,0.4);
+    transform: translateY(-1px);
+}
+
+/* ============================================================
+   LISTINGS / DATA
+   ============================================================ */
+
+.listing-header h3 {
+    margin: 0;
+    color: var(--silver-glow);
+    font-weight: 600;
+}
+
+.value {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+/* ============================================================
+   INDUSTRIAL GRID BACKGROUND SECTIONS
+   ============================================================ */
+
+.section-grid {
+    background-image: radial-gradient(circle at 1px 1px,
+        rgba(255,255,255,0.05) 1px,
+        transparent 0);
+    background-size: 24px 24px;
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+/* ============================================================
+   FORMS — Clean, industrial inputs
+   ============================================================ */
+
+input, select, textarea {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border-light);
+    color: var(--silver);
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    width: 100%;
+    margin-bottom: 1rem;
+    transition: 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--accent);
+    outline: none;
+    box-shadow: 0 0 8px rgba(158,199,255,0.3);
+}
+
+/* ============================================================
+   TABLES — Precision trading terminal style
+   ============================================================ */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+th, td {
+    padding: 0.8rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+th {
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    color: var(--silver-soft);
+}
+
+tr:hover {
+    background: rgba(255,255,255,0.03);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--silver-soft);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-light);
+    margin-top: 3rem;
+}
+

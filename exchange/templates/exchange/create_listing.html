@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h1>Create a New Listing</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">Create Listing</button>
+</form>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const listingType = document.querySelector("select[name='listing_type']");
+
+    // Fields to show when offering an item for silver
+    const itemFields = [
+        "item_name",
+        "item_description",
+        "desired_silver_oz"
+    ];
+
+    // Fields to show when offering silver for an item
+    const silverFields = [
+        "bullion_amount_oz",
+        "desired_item_description"
+    ];
+
+    // Fields that should ALWAYS be hidden
+    const alwaysHidden = [
+        "item_estimated_value_oz"
+    ];
+
+    function updateVisibility() {
+        const type = listingType.value;
+
+        // Show item-for-silver fields
+        itemFields.forEach(field => {
+            const el = document.querySelector(`[name='${field}']`).closest("p");
+            el.style.display = (type === "item_for_silver") ? "block" : "none";
+        });
+
+        // Show silver-for-item fields
+        silverFields.forEach(field => {
+            const el = document.querySelector(`[name='${field}']`).closest("p");
+            el.style.display = (type === "silver_for_item") ? "block" : "none";
+        });
+
+        // Always hide unused fields
+        alwaysHidden.forEach(field => {
+            const el = document.querySelector(`[name='${field}']`).closest("p");
+            el.style.display = "none";
+        });
+    }
+
+    listingType.addEventListener("change", updateVisibility);
+    updateVisibility(); // run on page load
+});
+</script>
+
+{% endblock %}
+

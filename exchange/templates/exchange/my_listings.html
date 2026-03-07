@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}My Listings{% endblock %}
+
+{% block content %}
+<h1>My Listings</h1>
+
+{% if listings %}
+    <ul>
+        {% for listing in listings %}
+            <li style="margin-bottom: 1rem;">
+
+                {% if listing.listing_type == "item_for_silver" %}
+                    <strong>{{ listing.item.name }}</strong><br>
+                    {{ listing.item.description|truncatewords:20 }}<br>
+                    <em>Wants: {{ listing.desired_silver_oz }} oz silver</em><br>
+
+                {% elif listing.listing_type == "silver_for_item" %}
+                    <strong>Offering {{ listing.bullion_amount_oz }} oz silver</strong><br>
+                    <em>Wants: {{ listing.desired_item_description|truncatewords:20 }}</em><br>
+                {% endif %}
+
+                <p>
+                    <a href="#">View</a>
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You haven't listed anything yet.</p>
+{% endif %}
+
+{% endblock %}
+

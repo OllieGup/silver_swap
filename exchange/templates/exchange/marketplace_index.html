@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+<p><a href="{% url 'create_listing' %}">Create a New Listing</a></p>
+
+
+{% block content %}
+<h1>Marketplace</h1>
+<p>Browse all active listings.</p>
+
+<hr>
+
+{% if listings %}
+    <ul>
+        {% for listing in listings %}
+            <li>
+                <strong>Listing #{{ listing.id }}</strong><br>
+
+                {% if listing.listing_type == "item_for_silver" %}
+                    <p><strong>Offering:</strong> {{ listing.item.name }} ({{ listing.item.estimated_value_oz }} oz est.)</p>
+                    <p><strong>Wants:</strong> {{ listing.desired_silver_oz }} oz silver</p>
+
+                {% elif listing.listing_type == "silver_for_item" %}
+                    <p><strong>Offering:</strong> {{ listing.bullion_amount_oz }} oz silver</p>
+                    <p><strong>Wants:</strong> {{ listing.desired_item_description }}</p>
+                {% endif %}
+
+                <p><em>Posted by {{ listing.owner.username }} on {{ listing.created_at }}</em></p>
+                <hr>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No active listings yet.</p>
+{% endif %}
+
+{% endblock %}
+
