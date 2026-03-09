@@ -25,8 +25,13 @@ SECRET_KEY = 'django-insecure-16ph5nykn+8&#5uf18k(u4uz%@7@2*t$h4$uz$27wd0x+l-q5$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost",
+    "127.0.0.1",
+    ".ngrok-free.dev",]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.ngrok-free.dev",
+]
 
 # Application definition
 
@@ -38,8 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'exchange',
-   
 ]
+
 
 
 MIDDLEWARE = [

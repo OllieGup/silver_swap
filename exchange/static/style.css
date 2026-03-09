@@ -40,6 +40,8 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
+
+    padding-top: 80px; /* ensures content sits below the header */
 }
 
 /* Typography scale */
@@ -53,6 +55,53 @@ h1, h2, h3 {
 p {
     color: var(--silver-soft);
 }
+
+/* ============================================================
+   BRAND HEADER — SilverSwap identity bar
+   ============================================================ */
+
+.site-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid var(--border-light);
+    backdrop-filter: blur(12px);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-text {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--silver);
+    letter-spacing: 1px;
+    text-transform: none;
+}
+
+/* Spinning silver coin */
+.coin {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #e6e6e6, #bfbfbf, #8c8c8c);
+    border: 2px solid var(--silver-soft);
+    box-shadow:
+        inset 0 0 4px rgba(255,255,255,0.4),
+        0 0 8px rgba(0,0,0,0.4);
+    animation: spin 2s linear infinite;
+}
+
+/* 3D spin animation */
+@keyframes spin {
+    from { transform: rotateY(0deg); }
+    to   { transform: rotateY(360deg); }
+}
+
 
 /* ============================================================
    NAVBAR
