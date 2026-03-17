@@ -2,7 +2,6 @@
 
 <p><a href="{% url 'create_listing' %}">Create a New Listing</a></p>
 
-
 {% block content %}
 <h1>Marketplace</h1>
 <p>Browse all active listings.</p>
@@ -25,6 +24,15 @@
                 {% endif %}
 
                 <p><em>Posted by {{ listing.owner.username }} on {{ listing.created_at }}</em></p>
+
+                <!-- ⭐ Add this View link -->
+                <a class="btn btn-sm" style="border:1px solid #ccc; padding:4px 8px; border-radius:4px;" href="{% url 'listing_detail' listing.id %}">
+    View
+</a>
+
+
+
+
                 <hr>
             </li>
         {% endfor %}

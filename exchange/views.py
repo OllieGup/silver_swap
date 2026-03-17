@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.utils import timezone
 from .models import Listing
@@ -58,8 +59,8 @@ def marketplace_index(request):
 def my_listings(request):
     listings = Listing.objects.filter(owner=request.user).order_by('-created_at')
     return render(request, 'exchange/my_listings.html', {'listings': listings})
-def listing_detail(request, listing_id):
-    listing = Listing.objects.get(id=listing_id)
+def listing_detail(request, pk):
+    listing = get_object_or_404(Listing, pk=pk)
     return render(request, "exchange/listing_detail.html", {"listing": listing})
 def create_listing(request):
     if request.method == "POST":

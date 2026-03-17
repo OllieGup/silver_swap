@@ -21,7 +21,7 @@
                 {% endif %}
 
                 <p>
-                    <a href="#">View</a>
+                    <a href="{% url 'listing_detail' listing.id %}">View</a>
                 </p>
             </li>
         {% endfor %}
