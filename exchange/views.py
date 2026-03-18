@@ -7,6 +7,8 @@ from .forms import CreateListingForm
 from .models import Listing, Item
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from .models import Listing, Offer
+from .forms import OfferForm
 
 
 # If you have models, import them here:
@@ -108,9 +110,78 @@ def signup(request):
         form = UserCreationForm() 
     return render(request, "registration/signup.html", {"form": form})
 
+def accept_offer(request, offer_id):
+    offer = get_object_or_404(Offer, id=offer_id)
+
+    # Only the listing owner can accept
+    if request.user != offer.listing.owner:
+        return redirect('listing_detail', pk=offer.listing.id)
+
+    # Mark this offer as accepted
+    offer.status = "accepted"
+    offer.save()
+
+    # Reject all other offers on the same listing
+    Offer.objects.filter(listing=offer.listing).exclude(id=offer.id).update(status="rejected")
+
+    # Mark the listing as pending
+    offer.listing.status = "pending"
+    offer.listing.save()
+
+    return redirect('listing_detail', pk=offer.listing.id)
 
 
+def reject_offer(request, offer_id):
+    offer = get_object_or_404(Offer, id=offer_id)
 
+    # Only the listing owner can reject
+    if request.user != offer.listing.owner:
+        return redirect('listing_detail', pk=offer.listing.id)
+
+    offer.status = "rejected"
+    offer.save()
+
+    return redirect('listing_detail', pk=offer.listing.id)
+
+def make_offer(request, pk):
+    listing = get_object_or_404(Listing, pk=pk)
+
+    # Prevent owners from offering on their own listing
+    if request.user == listing.owner:
+        return redirect('listing_detail', pk=pk)
+
+    if request.method == 'POST':
+        form = OfferForm(request.POST)
+        if form.is_valid():
+            offer = form.save(commit=False)
+            offer.listing = listing
+            offer.offered_by = request.user
+            offer.save()
+            return redirect('listing_detail', pk=pk)
+    else:
+        form = OfferForm()
+
+    return render(request, 'exchange/make_offer.html', {
+        'listing': listing,
+        'form': form,
+    })
+
+def confirm_exchange(request, pk):
+    listing = get_object_or_404(Listing, pk=pk)
+
+    # Only the two parties can confirm
+    accepted_offer = listing.accepted_offer
+    if not accepted_offer:
+        return redirect('listing_detail', pk=pk)
+
+    if request.user not in [listing.owner, accepted_offer.offered_by]:
+        return redirect('listing_detail', pk=pk)
+
+    # Mark listing as completed
+    listing.status = "completed"
+    listing.save()
+
+    return redirect('listing_detail', pk=pk)
 
 
 

@@ -1,5 +1,6 @@
 from django import forms
 from .models import Item, Listing
+from .models import Offer
 
 class CreateListingForm(forms.Form):
     LISTING_TYPE_CHOICES = [
@@ -38,4 +39,12 @@ class CreateListingForm(forms.Form):
                     self.add_error(field, "This field is required for silver-for-item listings.")
 
         return cleaned
+
+class OfferForm(forms.ModelForm):
+    class Meta:
+        model = Offer
+        fields = ['message']
+        widgets = {
+            'message': forms.Textarea(attrs={'rows': 4}),
+        }
 

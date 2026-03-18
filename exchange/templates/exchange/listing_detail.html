@@ -22,6 +22,46 @@
     <p><strong>Desired Item:</strong> {{ listing.desired_item_description }}</p>
 {% endif %}
 
+{% if request.user != listing.owner %}
+    <p>
+        <a href="{% url 'make_offer' listing.id %}">Make an Offer</a>
+    </p>
+{% endif %}
+
+{% if request.user == listing.owner %}
+    <h2>Offers</h2>
+
+    {% if listing.offers.all %}
+        <ul>
+            {% for offer in listing.offers.all %}
+                <li>
+                    <p><strong>From:</strong> {{ offer.offered_by.username }}</p>
+                    <p><strong>Message:</strong> {{ offer.message|default:"(No message)" }}</p>
+                    <p><strong>Status:</strong> {{ offer.status }}</p>
+
+                    {% if offer.status == "pending" %}
+                        <a href="{% url 'accept_offer' offer.id %}">Accept</a> |
+                        <a href="{% url 'reject_offer' offer.id %}">Reject</a>
+                    {% endif %}
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No offers yet.</p>
+    {% endif %}
+{% endif %}
+
+
+{% if listing.status == "pending" %}
+    {% if request.user == listing.owner or request.user == listing.accepted_offer.offered_by %}
+        <p>
+            <a href="{% url 'confirm_exchange' listing.id %}">Mark Exchange as Completed</a>
+        </p>
+    {% endif %}
+{% endif %}
+
+
 <a href="{% url 'marketplace_index' %}">Back to Marketplace</a>
 {% endblock %}
 
