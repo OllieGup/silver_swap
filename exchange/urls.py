@@ -14,6 +14,8 @@ urlpatterns = [
     path('offer/<int:offer_id>/accept/', views.accept_offer, name='accept_offer'),
     path('offer/<int:offer_id>/reject/', views.reject_offer, name='reject_offer'),
     path('listing/<int:pk>/confirm/', views.confirm_exchange, name='confirm_exchange'),
+    path("notifications/", views.notifications_view, name="notifications"),
+
 
 ]
 

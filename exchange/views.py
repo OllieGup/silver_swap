@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from .models import Listing, Offer
 from .forms import OfferForm
+from .models import Notification
 
 
 # If you have models, import them here:
@@ -120,6 +121,13 @@ def accept_offer(request, offer_id):
     # Mark this offer as accepted
     offer.status = "accepted"
     offer.save()
+    
+    Notification.objects.create(
+        user=offer.offered_by,
+        message=f"Your offer on Listing #{offer.listing.id} was accepted!",
+        url=f"/listing/{offer.listing.id}/"
+    )
+
 
     # Reject all other offers on the same listing
     Offer.objects.filter(listing=offer.listing).exclude(id=offer.id).update(status="rejected")
@@ -157,6 +165,12 @@ def make_offer(request, pk):
             offer.listing = listing
             offer.offered_by = request.user
             offer.save()
+            # 🔔 Create notification for the listing owner
+            Notification.objects.create(
+                user=listing.owner,
+                message=f"You have a new offer from {request.user.username}",
+                url=f"/listing/{listing.id}/"
+            )
             return redirect('listing_detail', pk=pk)
     else:
         form = OfferForm()
@@ -182,6 +196,17 @@ def confirm_exchange(request, pk):
     listing.save()
 
     return redirect('listing_detail', pk=pk)
+
+def notifications_view(request):
+    notes = request.user.notifications.order_by('-created_at')
+
+    # Mark all as read
+    notes.update(is_read=True)
+
+    return render(request, "exchange/notifications.html", {
+        "notifications": notes
+    })
+
 
 
 

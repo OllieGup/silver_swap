@@ -34,23 +34,30 @@
     {% if listing.offers.all %}
         <ul>
             {% for offer in listing.offers.all %}
-                <li>
+                <li style="margin-bottom: 1.5rem;">
                     <p><strong>From:</strong> {{ offer.offered_by.username }}</p>
-                    <p><strong>Message:</strong> {{ offer.message|default:"(No message)" }}</p>
+                    <p><strong>Message:</strong><br>{{ offer.message|linebreaksbr }}</p>
                     <p><strong>Status:</strong> {{ offer.status }}</p>
 
                     {% if offer.status == "pending" %}
-                        <a href="{% url 'accept_offer' offer.id %}">Accept</a> |
-                        <a href="{% url 'reject_offer' offer.id %}">Reject</a>
+                        <p>
+                            <a href="{% url 'accept_offer' offer.id %}">
+                                Accept offer from {{ offer.offered_by.username }}
+                            </a>
+                            |
+                            <a href="{% url 'reject_offer' offer.id %}">
+                                Reject offer from {{ offer.offered_by.username }}
+                            </a>
+                        </p>
                     {% endif %}
                 </li>
-                <hr>
             {% endfor %}
         </ul>
     {% else %}
         <p>No offers yet.</p>
     {% endif %}
 {% endif %}
+
 
 
 {% if listing.status == "pending" %}
@@ -60,6 +67,17 @@
         </p>
     {% endif %}
 {% endif %}
+
+{% if listing.status == "pending" %}
+    {% if request.user == listing.owner or request.user == listing.accepted_offer.offered_by %}
+        <p>
+            <a href="{% url 'confirm_exchange' listing.id %}">
+                Mark Exchange as Completed
+            </a>
+        </p>
+    {% endif %}
+{% endif %}
+
 
 
 <a href="{% url 'marketplace_index' %}">Back to Marketplace</a>

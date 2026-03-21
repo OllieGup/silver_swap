@@ -30,6 +30,14 @@
         <a href="{% url 'marketplace_index' %}">Marketplace</a>
 
         {% if user.is_authenticated %}
+            <a href="{% url 'notifications' %}">
+                    Notifications ({{ user.unread_notifications }})
+
+            </a>
+        {% endif %}
+
+
+        {% if user.is_authenticated %}
             <a href="{% url 'dashboard' %}">Dashboard</a>
             <a href="{% url 'my_listings' %}">My Listings</a>
             <a href="{% url 'create_listing' %}">Create Listing</a>

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Your Notifications</h1>
+
+<ul>
+    {% for note in notifications %}
+        <li>
+            <a href="{{ note.url }}">{{ note.message }}</a>
+            <small>{{ note.created_at }}</small>
+        </li>
+    {% empty %}
+        <li>No notifications</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+

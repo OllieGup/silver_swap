@@ -98,6 +98,25 @@ class Offer(models.Model):
     def __str__(self):
         return f"Offer by {self.offered_by} on Listing #{self.listing.id}"
 
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
+    message = models.CharField(max_length=255)
+    url = models.CharField(max_length=255, blank=True)
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Notification for {self.user.username}: {self.message}"
+
+
     
+from django.contrib.auth.models import User
+
+@property
+def unread_notifications(self):
+    return self.notifications.filter(is_read=False).count()
+
+User.add_to_class("unread_notifications", unread_notifications)
 
 
