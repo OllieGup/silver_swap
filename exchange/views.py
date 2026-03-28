@@ -18,45 +18,6 @@ from .models import Notification
 def home(request): 
     return render(request, "home.html")
 
-def dashboard_view(request):
-    # Placeholder data — replace with real services/models later
-    spot_price = 18.42
-    change_amount = 0.27
-    change_percent = 1.49
-    premium_index = 7.2
-
-    # Example placeholders for listings, holdings, activity
-    recent_listings = []
-    holdings = {
-        "total_ounces": 0,
-        "current_value": 0,
-        "cost_basis": 0,
-        "unrealised_gain": 0,
-        
-    }
-    activity = []
-
-    context = {
-        "spot_price": spot_price,
-        "change_amount": change_amount,
-        "change_percent": change_percent,
-        "premium_index": premium_index,
-        "updated_at": timezone.now(),
-
-        "recent_listings": recent_listings,
-        "holdings": holdings,
-        "activity": activity,
-    }
-
-    return render(request, "dashboard/dashboard.html", context)
-
-def marketplace_index(request):
-    listings = Listing.objects.filter(status="active").order_by("-created_at")
-    context = {
-        "listings": listings
-    } 
-    return render(request, "exchange/marketplace_index.html", context)
-
 
 @login_required
 def my_listings(request):
@@ -99,6 +60,15 @@ def create_listing(request):
         form = CreateListingForm()
 
     return render(request, "exchange/create_listing.html", {"form": form})
+
+
+def marketplace_index(request):
+    listings = Listing.objects.filter(status="active").order_by("-created_at")
+    context = {
+        "listings": listings
+    }
+    return render(request, "exchange/marketplace_index.html", context)
+
 
 
 def signup(request): 

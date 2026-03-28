@@ -15,7 +15,7 @@
                 <strong>Listing #{{ listing.id }}</strong><br>
 
                 {% if listing.listing_type == "item_for_silver" %}
-                    <p><strong>Offering:</strong> {{ listing.item.name }} ({{ listing.item.estimated_value_oz }} oz est.)</p>
+                    <p><strong>Offering:</strong> {{ listing.item.name }} </p>
                     <p><strong>Wants:</strong> {{ listing.desired_silver_oz }} oz silver</p>
 
                 {% elif listing.listing_type == "silver_for_item" %}
